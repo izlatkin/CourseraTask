@@ -1,7 +1,0 @@
-// Grant tests all permissions
-// SCCS: %W% %E%
-
-grant { 
-	permission java.security.AllPermission;
-};
-

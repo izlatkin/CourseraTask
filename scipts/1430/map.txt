@@ -1,6 +1,0 @@
-/set/java/re/jck/9/promoted/ea/b24/binaries/JCK-runtime-9 /local/home/ilya/pythonDir/projects/scipts/1430/out
-/net/zenit.ru.oracle.com/export6/java/re/jck/9/promoted/ea/b24/binaries/JCK-runtime-9 /local/home/ilya/pythonDir/projects/scipts/1430/out
-/net/jessika/export/qa-results/jck/9/ea/b25/results/qac/1430 /local/home/ilya/pythonDir/projects/scipts/1430/out
-/net/jessika.ru.oracle.com/export/qa-results/jck/9/ea/b25/results/qac/1430 /local/home/ilya/pythonDir/projects/scipts/1430/out
-/net/spbnas402/export/SQE_jessika/qa-results/jck/9/ea/b25/results/qac/1430 /local/home/ilya/pythonDir/projects/scipts/1430/out
-/net/spbnas402.ru.oracle.com/export/SQE_jessika/qa-results/jck/9/ea/b25/results/qac/1430 /local/home/ilya/pythonDir/projects/scipts/1430/out
