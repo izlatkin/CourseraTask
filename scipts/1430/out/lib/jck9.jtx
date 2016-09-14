@@ -1,0 +1,10 @@
+# Exclude List
+# SCCS %W% %E%
+api/java_util/concurrent/ThreadLocalRandom/DoublesTests.html#DoublesTests[testDistinct]           JCK-7301787  placeholder  
+api/java_util/concurrent/ThreadLocalRandom/DoublesTests.html#DoublesTests[testRepeatedCalls]      JCK-7301787  placeholder  
+api/java_util/concurrent/ThreadLocalRandom/GaussiansTests.html#GaussiansTests[testDistinct]       JCK-7301787  placeholder  
+api/java_util/concurrent/ThreadLocalRandom/GaussiansTests.html#GaussiansTests[testRepeatedCalls]  JCK-7301787  placeholder  
+api/java_util/concurrent/ThreadLocalRandom/IntsTests.html#IntsTests[testDistinct]                 JCK-7301787  placeholder  
+api/java_util/concurrent/ThreadLocalRandom/IntsTests.html#IntsTests[testRepeatedCalls]            JCK-7301787  placeholder  
+api/java_util/concurrent/ThreadLocalRandom/LongsTests.html#LongsTests[testDistinct]               JCK-7301787  placeholder  
+api/java_util/concurrent/ThreadLocalRandom/LongsTests.html#LongsTests[testRepeatedCalls]          JCK-7301787  placeholder  

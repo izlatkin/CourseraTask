@@ -1,0 +1,1336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Test Specifications and Descriptions for Instrumentation</TITLE>
+<!-- Changed by: Yuri Gaevsky, Dmitry Miltsov, 08/01/31 -->
+<!-- Generated from : api/java_lang/instrument/Instrumentation/InstrumentationAttach.test.xml -->
+<!-- THIS FILE IS GENERATED AUTOMATICALLY.
+     PLEASE CONTACT THE AUTHOR OF THE TESTS BEFORE ANY EDITING. -->
+</HEAD>
+
+<BODY>
+<H1>Test Specifications and Descriptions for Instrumentation</H1>
+<P>
+Test for Instrumentation
+<P>
+<HR>
+<UL>
+  <LI><A HREF="#ClassFileTransformer.transform(ClassLoader,String,Class,ProtectionDomain,byte[])"><BIG><CODE>public byte[] ClassFileTransformer.transform(ClassLoader loader, String className, Class classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer)</CODE></BIG></A>
+  <LI><A HREF="#addTransformer(ClassFileTransformer)"><BIG><CODE>public void addTransformer(ClassFileTransformer transformer)</CODE></BIG></A>
+  <LI><A HREF="#agentmain(String,Instrumentation)"><BIG><CODE>public static void agentmain(String agentArgs, Instrumentation inst)</CODE></BIG></A>
+  <LI><A HREF="#appendToBootstrapClassLoaderSearch(JarFile)"><BIG><CODE>void appendToBootstrapClassLoaderSearch(JarFile jarfile)</CODE></BIG></A>
+  <LI><A HREF="#appendToSystemClassLoaderSearch(JarFile)"><BIG><CODE>void appendToSystemClassLoaderSearch(JarFile jarfile)</CODE></BIG></A>
+  <LI><A HREF="#getAllLoadedClasses()"><BIG><CODE>public Class[] getAllLoadedClasses()</CODE></BIG></A>
+  <LI><A HREF="#getInitiatedClasses(ClassLoader)"><BIG><CODE>public Class[] getInitiatedClasses(ClassLoader loader)</CODE></BIG></A>
+  <LI><A HREF="#getObjectSize(Object)"><BIG><CODE>public long getObjectSize(Object objectToSize)</CODE></BIG></A>
+  <LI><A HREF="#isModifiableClass(Class)"><BIG><CODE>public boolean isModifiableClass(Class theClass)</CODE></BIG></A>
+  <LI><A HREF="#isNativeMethodPrefixSupported()"><BIG><CODE>public boolean isNativeMethodPrefixSupported()</CODE></BIG></A>
+  <LI><A HREF="#isRedefineClassesSupported()"><BIG><CODE>public boolean isRedefineClassesSupported()</CODE></BIG></A>
+  <LI><A HREF="#isRetransformClassesSupported()"><BIG><CODE>boolean isRetransformClassesSupported()</CODE></BIG></A>
+  <LI><A HREF="#redefineClasses(ClassDefinition...)"><BIG><CODE>public void redefineClasses(ClassDefinition... definitions)</CODE></BIG></A>
+  <LI><A HREF="#removeTransformer(ClassFileTransformer)"><BIG><CODE>public boolean removeTransformer(ClassFileTransformer transformer)</CODE></BIG></A>
+  <LI><A HREF="#retransformClasses(Class&lt;?&gt;...)"><BIG><CODE>public void retransformClasses(Class&lt;?&gt;... classes) throws UnmodifiableClassException</CODE></BIG></A>
+  <LI><A HREF="#setNativeMethodPrefix(ClassFileTransformer,String)"><BIG><CODE>public void setNativeMethodPrefix(ClassFileTransformer transformer, String prefix)</CODE></BIG></A>
+</UL>
+
+
+
+<P>
+<HR>
+<H3><A NAME="ClassFileTransformer.transform(ClassLoader,String,Class,ProtectionDomain,byte[])"><CODE>public byte[] ClassFileTransformer.transform(ClassLoader loader, String className, Class classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public byte[] ClassFileTransformer.transform(ClassLoader loader, String className, Class classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer)</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> The method arguments are:
+classBeingRedefined - if this is a redefine, the class being redefined,
+classfileBuffer - the input byte buffer in class file format,
+className - the name of the class in the internal form of fully qualified class name, </TD>
+    <TD> classBeingRedefined is as expected,
+classfileBuffer is valid class file byte array, className corresponds to the redefined class name </TD>
+    <TD SCOPE="row"> Instrumentation029 </TD>
+  </TR>
+  <TR>
+    <TD> If IllegalClassFormatException is thrown by
+transformer then redefine will still be attempted </TD>
+    <TD> despite of transform() throws IllegalClassFormatException the class
+is redefined </TD>
+    <TD SCOPE="row"> Instrumentation030 </TD>
+  </TR>
+  <TR>
+    <TD> The implementation of this method may transform
+the supplied class file and return a new replacement class file. If multiple transformers
+are registered, they will be called in the order added. The transformer is called during
+the processing of the request, before the class file bytes have been applied </TD>
+    <TD> first registered transformer changes
+class bytes, second expects changed class bytes and changes the class once more </TD>
+    <TD SCOPE="row"> Instrumentation044 </TD>
+  </TR>
+  <TR>
+    <TD> The method arguments are:
+classBeingRedefined - if this is a redefine, the class being redefined, otherwise null
+classfileBuffer - the input byte buffer in class file format,
+className - the name of the class in the internal form of fully qualified class name, </TD>
+    <TD> classBeingRedefined is null,
+classfileBuffer is valid class file byte array </TD>
+    <TD SCOPE="row"> Instrumentation044 </TD>
+  </TR>
+  <TR>
+    <TD> If the transformer believes the classFileBuffer
+does not represent a validly formatted class file, it should throw an IllegalClassFormatException.
+Subsequent transformers will still be called and the load or redefine will still be attempted. </TD>
+    <TD> in a set of registered transformers,
+the transformer throwing IllegalClassFormatException does not affect transformation </TD>
+    <TD SCOPE="row"> Instrumentation045 </TD>
+  </TR>
+  <TR>
+    <TD> If the implementing method determines that no
+transformations are needed, it should return null </TD>
+    <TD> in a set of registered transformers,
+the transformer returning null does not affect transformation </TD>
+    <TD SCOPE="row"> Instrumentation046 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation029,
+   Instrumentation030,
+   Instrumentation044,
+   Instrumentation045,
+   Instrumentation046)
+
+
+<P>
+<HR>
+<H3><A NAME="addTransformer(ClassFileTransformer)"><CODE>public void addTransformer(ClassFileTransformer transformer)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public void addTransformer(ClassFileTransformer transformer)</CODE>.
+
+<H4>Boundary value analysis</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> transformer </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> null </TD>
+    <TD> NullPointerException is thrown </TD>
+    <TD SCOPE="row"> Instrumentation040 </TD>
+  </TR>
+</TABLE>
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Pre-conditions </TH>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD>  </TD>
+    <TD> Registers the supplied transformer.
+The same transformer may be added more than once </TD>
+    <TD> twice registered one transformer may be
+successively removed twice, the third removement returns false </TD>
+    <TD SCOPE="row"> Instrumentation042 </TD>
+  </TR>
+  <TR>
+    <TD>  </TD>
+    <TD> All future class definitions will be seen by
+the transformer, except definitions of classes upon which any registered transformer is dependent. </TD>
+    <TD> the class loaded by transformer is not seen
+by another transformer, the order of invocations is correct </TD>
+    <TD SCOPE="row"> Instrumentation043 </TD>
+  </TR>
+  <TR>
+    <TD> a transformer is registered in agent, class is loaded in test (application) class </TD>
+    <TD> All future class definitions will be seen by the transformer. </TD>
+    <TD> the test gets transformed class </TD>
+    <TD SCOPE="row"> Instrumentation048 </TD>
+  </TR>
+  <TR>
+    <TD>  </TD>
+    <TD> Agent switch may be repeated multiple times on the
+same command line, thus creating multiple agents. Each premain method will be called in the
+order the -javaagent switches appeared on the command line. </TD>
+    <TD> The first agent registers tranasformer,
+the second agent checks that the first transformer is registered, registers own transformer, loads
+class and checks that class is transformed by both registered transformers, then
+removes both transformers. </TD>
+    <TD SCOPE="row"> Instrumentation049 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation040,
+   Instrumentation042,
+   Instrumentation043,
+   Instrumentation048,
+   Instrumentation049)
+
+
+<P>
+<HR>
+<H3><A NAME="agentmain(String,Instrumentation)"><CODE>public static void agentmain(String agentArgs, Instrumentation inst)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public static void agentmain(String agentArgs, Instrumentation inst)</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> Each agent has its own classname and options. Each agent
+receives its own options as a single string. </TD>
+    <TD> options passed to the first agent are as expected </TD>
+    <TD SCOPE="row"> Instrumentation001 </TD>
+  </TR>
+  <TR>
+    <TD> Each agent has its own classname and options. Each agent
+receives its own options as a single string. </TD>
+    <TD> options passed to the second agent are as expected </TD>
+    <TD SCOPE="row"> Instrumentation100 </TD>
+  </TR>
+  <TR>
+    <TD> The JVM first attempts to invoke the following method on the agent class:
+<pre>
+    public static void agentmain(String agentArgs, Instrumentation inst);
+</pre>
+The agent class may also have a premain method for use when the agent is
+started using a command-line option. When the agent is started after VM
+startup the premain method is not invoked. </TD>
+    <TD> the premain method is not invoked </TD>
+    <TD SCOPE="row"> Instrumentation250 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation001,
+   Instrumentation100,
+   Instrumentation250)
+
+
+<P>
+<HR>
+<H3><A NAME="appendToBootstrapClassLoaderSearch(JarFile)"><CODE>void appendToBootstrapClassLoaderSearch(JarFile jarfile)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>void appendToBootstrapClassLoaderSearch(JarFile jarfile)</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> The Java Virtual Machine Specification specifies that a subsequent attempt to resolve
+a symbolic reference that the Java virtual machine has previously unsuccessfully attempted
+to resolve always fails with the same error that was thrown as a result of the initial
+resolution attempt. </TD>
+    <TD> A subsequent attempt to resolve a symbolic reference that the JVM has previously unsuccessfully attempted
+to resolve always fails with the same error that was thrown as a result of the initial resolution attempt. </TD>
+    <TD SCOPE="row"> Instrumentation201 </TD>
+  </TR>
+  <TR>
+    <TD> When the virtual machine's built-in class loader, known as the bootstrap class loader,
+unsuccessfully searches for a class, the entries in the JAR file will be searched as well. </TD>
+    <TD> The classes contained within given JAR file are loadable by bootstrap class loader </TD>
+    <TD SCOPE="row"> Instrumentation202 </TD>
+  </TR>
+  <TR>
+    <TD> throws: NullPointerException If jarfile is null </TD>
+    <TD> NullPointerException is thrown as expected </TD>
+    <TD SCOPE="row"> Instrumentation203 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation201,
+   Instrumentation202,
+   Instrumentation203)
+
+
+<P>
+<HR>
+<H3><A NAME="appendToSystemClassLoaderSearch(JarFile)"><CODE>void appendToSystemClassLoaderSearch(JarFile jarfile)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>void appendToSystemClassLoaderSearch(JarFile jarfile)</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> The Java Virtual Machine Specification specifies that a subsequent attempt to resolve
+a symbolic reference that the Java virtual machine has previously unsuccessfully attempted
+to resolve always fails with the same error that was thrown as a result of the initial
+resolution attempt. </TD>
+    <TD> A subsequent attempt to resolve a symbolic reference that the JVM has previously unsuccessfully attempted
+to resolve always fails with the same error that was thrown as a result of the initial resolution attempt. </TD>
+    <TD SCOPE="row"> Instrumentation211 </TD>
+  </TR>
+  <TR>
+    <TD> When the system class loader for delegation (see getSystemClassLoader()) unsuccessfully searches
+for a class, the entries in the JarFile will be searched as well.
+The system class loader supports adding a JAR file to be searched if it implements
+a method named appendToClassPathForInstrumentation which takes a single parameter
+of type java.lang.String.
+throws: UnsupportedOperationException - If the system class loader does not support appending a JAR file to be searched. </TD>
+    <TD> UnsupportedOperationException is thrown as expected if the system class loader does not support appending a JAR file to be searched
+The classes contained within given JAR file are loadable by system class loader if one does support appending a JAR file to be searched </TD>
+    <TD SCOPE="row"> Instrumentation212 </TD>
+  </TR>
+  <TR>
+    <TD> throws:NullPointerException If jarfile is null </TD>
+    <TD> NullPointerException is thrown as expected </TD>
+    <TD SCOPE="row"> Instrumentation213 </TD>
+  </TR>
+  <TR>
+    <TD> This method does not change the value of java.class.path system property. </TD>
+    <TD> The value of java.class.path system property is not changed as expected. </TD>
+    <TD SCOPE="row"> Instrumentation215 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation211,
+   Instrumentation212,
+   Instrumentation213,
+   Instrumentation215)
+
+
+<P>
+<HR>
+<H3><A NAME="getAllLoadedClasses()"><CODE>public Class[] getAllLoadedClasses()</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public Class[] getAllLoadedClasses()</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> The method returns an array containing all the classes loaded
+by the JVM, zero-length if there are none. </TD>
+    <TD> returned non-null reference is an array with positive length,
+contains test's class </TD>
+    <TD SCOPE="row"> Instrumentation004 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation004)
+
+
+<P>
+<HR>
+<H3><A NAME="getInitiatedClasses(ClassLoader)"><CODE>public Class[] getInitiatedClasses(ClassLoader loader)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public Class[] getInitiatedClasses(ClassLoader loader)</CODE>.
+
+<H4>Equivalence class partitioning</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> loader </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> null </TD>
+    <TD> no exceptions, returned array is non-null </TD>
+    <TD SCOPE="row"> Instrumentation007 </TD>
+  </TR>
+</TABLE>
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Pre-conditions </TH>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> new MyClassLoader is created, no classes are loaded </TD>
+    <TD> The method returns zero-length if there are no classes
+for which loader is an initiating loader. </TD>
+    <TD> non-null array is returned </TD>
+    <TD SCOPE="row"> Instrumentation005 </TD>
+  </TR>
+  <TR>
+    <TD> a class is loaded by the current class loader </TD>
+    <TD> The method returns an array of all classes for
+which loader is an initiating loader. </TD>
+    <TD> returned non-null reference is an array with length greater than zero </TD>
+    <TD SCOPE="row"> Instrumentation006 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation005,
+   Instrumentation006,
+   Instrumentation007)
+
+
+<P>
+<HR>
+<H3><A NAME="getObjectSize(Object)"><CODE>public long getObjectSize(Object objectToSize)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public long getObjectSize(Object objectToSize)</CODE>.
+
+<H4>Equivalence class partitioning</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> objectToSize </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> non-null objects </TD>
+    <TD> positive values </TD>
+    <TD SCOPE="row"> Instrumentation002 </TD>
+  </TR>
+</TABLE>
+
+<H4>Boundary value analysis</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> objectToSize </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> null </TD>
+    <TD> NullPointerException </TD>
+    <TD SCOPE="row"> Instrumentation003 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation002,
+   Instrumentation003)
+
+
+<P>
+<HR>
+<H3><A NAME="isModifiableClass(Class)"><CODE>public boolean isModifiableClass(Class theClass)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public boolean isModifiableClass(Class theClass)</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> throws: NullPointerException - if the specified class is null </TD>
+    <TD SCOPE="row"> Instrumentation216 </TD>
+  </TR>
+  <TR>
+    <TD> Primitive classes and array classes are never modifiable. </TD>
+    <TD SCOPE="row"> Instrumentation217 </TD>
+  </TR>
+  <TR>
+    <TD> Primitive classes (for example, java.lang.Integer.TYPE) and array classes are never modifiable. </TD>
+    <TD SCOPE="row"> Instrumentation220 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation216,
+   Instrumentation217,
+   Instrumentation220)
+
+
+<P>
+<HR>
+<H3><A NAME="isNativeMethodPrefixSupported()"><CODE>public boolean isNativeMethodPrefixSupported()</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public boolean isNativeMethodPrefixSupported()</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> Returns: true if the current JVM configuration supports setting a native method prefix, false if not </TD>
+    <TD SCOPE="row"> Instrumentation240 </TD>
+  </TR>
+  <TR>
+    <TD> Returns: true if the current JVM configuration supports setting a native method prefix, false if not </TD>
+    <TD SCOPE="row"> Instrumentation241 </TD>
+  </TR>
+  <TR>
+    <TD> Returns: true if the current JVM configuration supports setting a native method prefix, false if not </TD>
+    <TD SCOPE="row"> Instrumentation242 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation240,
+   Instrumentation241,
+   Instrumentation242)
+
+
+<P>
+<HR>
+<H3><A NAME="isRedefineClassesSupported()"><CODE>public boolean isRedefineClassesSupported()</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public boolean isRedefineClassesSupported()</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> During a single instantiation of a single JVM,
+multiple calls to this method will always return the same answer. </TD>
+    <TD> multiple method invocations return same result </TD>
+    <TD SCOPE="row"> Instrumentation019 </TD>
+  </TR>
+  <TR>
+    <TD> Returns whether or not the current JVM configuration supports
+redefinition of classes. </TD>
+    <TD> if isRedefineClassesSupported() returns true
+then redefineClasses() does not throw UnsupportedOperationException </TD>
+    <TD SCOPE="row"> Instrumentation024 </TD>
+  </TR>
+  <TR>
+    <TD> Returns whether or not the current JVM configuration supports
+redefinition of classes. </TD>
+    <TD> if isRedefineClassesSupported() returns true
+then redefineClasses() does not throw UnsupportedOperationException </TD>
+    <TD SCOPE="row"> Instrumentation025 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation019,
+   Instrumentation024,
+   Instrumentation025)
+
+
+<P>
+<HR>
+<H3><A NAME="isRetransformClassesSupported()"><CODE>boolean isRetransformClassesSupported()</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>boolean isRetransformClassesSupported()</CODE>.
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> Retransformation will only be supported if the Can-Retransform-Classes
+manifest attribute is set to true in the agent JAR file (as described
+ in the package specification) and the JVM supports this capability. </TD>
+    <TD SCOPE="row"> Instrumentation221 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation221)
+
+
+<P>
+<HR>
+<H3><A NAME="redefineClasses(ClassDefinition...)"><CODE>public void redefineClasses(ClassDefinition... definitions)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public void redefineClasses(ClassDefinition... definitions)</CODE>.
+
+<H4>Equivalence class partitioning</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> definitions </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> zero-length array </TD>
+    <TD> no exceptions if redefinition is supported, otherwise, UnsupportedOperationException </TD>
+    <TD SCOPE="row"> Instrumentation020 </TD>
+  </TR>
+</TABLE>
+
+<H4>Boundary value analysis</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> definitions </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> null </TD>
+    <TD> NullPointerException if redefinition is supported,
+otherwise, UnsupportedOperationException </TD>
+    <TD SCOPE="row"> Instrumentation021 </TD>
+  </TR>
+  <TR>
+    <TD> array with sinlge null element </TD>
+    <TD> NullPointerException if redefinition is supported,
+otherwise, UnsupportedOperationException </TD>
+    <TD SCOPE="row"> Instrumentation022 </TD>
+  </TR>
+  <TR>
+    <TD> array with byte[0] class file </TD>
+    <TD> ClassFormatError if redefinition is supported,
+otherwise, UnsupportedOperationException </TD>
+    <TD SCOPE="row"> Instrumentation023 </TD>
+  </TR>
+  <TR>
+    <TD> array with one element with class file of another class </TD>
+    <TD> NoClassDefFoundError if redefinition is supported,
+otherwise, UnsupportedOperationException </TD>
+    <TD SCOPE="row"> Instrumentation024 </TD>
+  </TR>
+</TABLE>
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Pre-conditions </TH>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> instances of to be redefined class are created and verified that return
+expected values </TD>
+    <TD> Redefine the supplied set of classes using the supplied class files.
+Operates on a set of classes. Instances of the redefined class are not affected. </TD>
+    <TD> if redefinition is supported: existing instances return
+same values after redefinition but new instances return new values, otherwise, UnsupportedOperationException </TD>
+    <TD SCOPE="row"> Instrumentation025 </TD>
+  </TR>
+  <TR>
+    <TD> the instance method of to be defined class runs and falls into wait() </TD>
+    <TD> If a redefined method has active stack frames, those
+active frames continue to run the bytecodes of the original method. The redefined method will
+be used on new invokes. </TD>
+    <TD> after class redefinition the old method continues execution,
+redefined method is executed on new invoke. </TD>
+    <TD SCOPE="row"> Instrumentation026 </TD>
+  </TR>
+  <TR>
+    <TD> the static method of to be defined class runs and falls into wait() </TD>
+    <TD> If a redefined method has active stack frames,
+those active frames continue to run the bytecodes of the original method. The redefined method
+will be used on new invokes. </TD>
+    <TD> after class redefinition the old method continues execution,
+redefined method is executed on new invoke. </TD>
+    <TD SCOPE="row"> Instrumentation027 </TD>
+  </TR>
+  <TR>
+    <TD>  </TD>
+    <TD> Redefining a class does not cause its
+initializers to be run. The values of static variables will remain as they were
+prior to the call. </TD>
+    <TD> after class redefinition the values of static variables
+did not change. </TD>
+    <TD SCOPE="row"> Instrumentation028 </TD>
+  </TR>
+  <TR>
+    <TD>  </TD>
+    <TD> Registered transformers will be called
+before the redefine operation is applied. </TD>
+    <TD> registered transformer receives not redefined class </TD>
+    <TD SCOPE="row"> Instrumentation029 </TD>
+  </TR>
+  <TR>
+    <TD> instance/static method/field is renamed in redefining class </TD>
+    <TD> The redefinition must not rename methods or fields. The methods
+throws UnsupportedOperationException if the redefinition made unsupported changes. </TD>
+    <TD> UnsupportedOperationException, if redefinition is supported </TD>
+    <TD SCOPE="row"> Instrumentation031 </TD>
+  </TR>
+  <TR>
+    <TD> redefinition with class with changed superclass / implementing another interface </TD>
+    <TD> The redefinition must not change inheritance. The methods
+throws UnsupportedOperationException if the redefinition made unsupported changes. </TD>
+    <TD> UnsupportedOperationException, if redefinition is supported </TD>
+    <TD SCOPE="row"> Instrumentation032 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation020,
+   Instrumentation021,
+   Instrumentation022,
+   Instrumentation023,
+   Instrumentation024,
+   Instrumentation025,
+   Instrumentation026,
+   Instrumentation027,
+   Instrumentation028,
+   Instrumentation029,
+   Instrumentation031,
+   Instrumentation032)
+
+
+<P>
+<HR>
+<H3><A NAME="removeTransformer(ClassFileTransformer)"><CODE>public boolean removeTransformer(ClassFileTransformer transformer)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public boolean removeTransformer(ClassFileTransformer transformer)</CODE>.
+
+<H4>Boundary value analysis</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> transformer </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> null </TD>
+    <TD> NullPointerException is thrown </TD>
+    <TD SCOPE="row"> Instrumentation041 </TD>
+  </TR>
+</TABLE>
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> removeTransformer() returns true
+if the transformer was found and removed, false if the transformer was not found </TD>
+    <TD> removement of unregistered
+transformer returns false </TD>
+    <TD SCOPE="row"> Instrumentation042 </TD>
+  </TR>
+  <TR>
+    <TD> Unregisters the supplied transformer. Future class
+definitions will not be shown to the transformer. </TD>
+    <TD> removed transformer is not invoked during future class definitions </TD>
+    <TD SCOPE="row"> Instrumentation047 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation041,
+   Instrumentation042,
+   Instrumentation047)
+
+
+<P>
+<HR>
+<H3><A NAME="retransformClasses(Class&lt;?&gt;...)"><CODE>public void retransformClasses(Class&lt;?&gt;... classes) throws UnmodifiableClassException</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public void retransformClasses(Class&lt;?&gt;... classes) throws UnmodifiableClassException</CODE>.
+
+<H4>Equivalence class partitioning</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> classes </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> null object </TD>
+    <TD> NullPointerException should be thrown </TD>
+    <TD SCOPE="row"> Instrumentation218 </TD>
+  </TR>
+  <TR>
+    <TD> classes array with one null component </TD>
+    <TD> NullPointerException should be thrown </TD>
+    <TD SCOPE="row"> Instrumentation219 </TD>
+  </TR>
+  <TR>
+    <TD> primitive or array class </TD>
+    <TD> UnmodifiableClassException should be thrown because primitive classes and array
+classes are never modifiable. </TD>
+    <TD SCOPE="row"> Instrumentation220 </TD>
+  </TR>
+</TABLE>
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> This method does not cause any initialization except that which would occur
+under the customary JVM semantics. In other words, redefining a class does not
+cause its initializers to be run. The values of static variables will remain as
+they were prior to the call. Instances of the retransformed class are not
+affected. </TD>
+    <TD> After retransformation of A1 class the value of static field did not change,
+retransformed static and instance methods will return new values, and value of
+instance field will have new value only on new instance. </TD>
+    <TD SCOPE="row"> Instrumentation222 </TD>
+  </TR>
+  <TR>
+    <TD> This method does not cause any initialization except that which would occur
+under the customary JVM semantics. In other words, redefining a class does not
+cause its initializers to be run. The values of static variables will remain as
+they were prior to the call. Instances of the retransformed class are not
+affected. The retransformation may change method bodies, the constant pool and
+attributes. </TD>
+    <TD> After retransformation of A1 class the value of static field did not change,
+retransformed static and instance methods will return new values, and value of
+instance field will have new value only on new instance. The retransformation
+may change method bodies, the constant pool and attributes. </TD>
+    <TD SCOPE="row"> Instrumentation223 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not remove field. </TD>
+    <TD SCOPE="row"> Instrumentation224 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not add field. </TD>
+    <TD SCOPE="row"> Instrumentation225 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not remove static field. </TD>
+    <TD SCOPE="row"> Instrumentation226 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not add static field. </TD>
+    <TD SCOPE="row"> Instrumentation227 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not remove method. </TD>
+    <TD SCOPE="row"> Instrumentation228 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not add method. </TD>
+    <TD SCOPE="row"> Instrumentation229 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not remove static method. </TD>
+    <TD SCOPE="row"> Instrumentation230 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not add static method. </TD>
+    <TD SCOPE="row"> Instrumentation231 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not change field access modifiers. </TD>
+    <TD SCOPE="row"> Instrumentation232 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not change field modifiers. </TD>
+    <TD SCOPE="row"> Instrumentation233 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not change method access modifiers. </TD>
+    <TD SCOPE="row"> Instrumentation234 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not change sychronized method modifier. </TD>
+    <TD SCOPE="row"> Instrumentation235 </TD>
+  </TR>
+  <TR>
+    <TD> The retransformation must not add, remove or rename fields or methods, change
+the signatures of methods, or change inheritance. </TD>
+    <TD> UnsupportedOperationException should be thrown because retransformation
+must not change class inheritance. </TD>
+    <TD SCOPE="row"> Instrumentation236 </TD>
+  </TR>
+  <TR>
+    <TD> Throws: ClassFormatError - if the data did not contain a valid class </TD>
+    <TD> ClassFormatError should be thrown. </TD>
+    <TD SCOPE="row"> Instrumentation237 </TD>
+  </TR>
+  <TR>
+    <TD> Throws: NoClassDefFoundError - if the name in the class file is not equal to the name of the class </TD>
+    <TD> NoClassDefFoundError should be thrown. </TD>
+    <TD SCOPE="row"> Instrumentation238 </TD>
+  </TR>
+  <TR>
+    <TD> Throws: UnsupportedClassVersionError - if the class file version numbers are not supported </TD>
+    <TD> UnsupportedClassVersionError should be thrown. </TD>
+    <TD SCOPE="row"> Instrumentation239 </TD>
+  </TR>
+  <TR>
+    <TD> This method does not cause any initialization except that which would occur
+under the customary JVM semantics. In other words, redefining a class does not
+cause its initializers to be run. The values of static variables will remain as
+they were prior to the call. Instances of the retransformed class are not
+affected. </TD>
+    <TD> After retransformation of classes A16 and A17 values of static fields did not change,
+retransformed static and instance methods will return new values, and value of
+instance fields will have new value only on new instances. </TD>
+    <TD SCOPE="row"> Instrumentation251 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<A NAME="InstrumentationAttach"></A>
+<P>
+Test cases included:<br>
+  Instrumentation001,
+  Instrumentation002,
+  Instrumentation003,
+  Instrumentation004,
+  Instrumentation005,
+  Instrumentation006,
+  Instrumentation007,
+  Instrumentation019,
+  Instrumentation020,
+  Instrumentation021,
+  Instrumentation022,
+  Instrumentation023,
+  Instrumentation024,
+  Instrumentation025,
+  Instrumentation026,
+  Instrumentation027,
+  Instrumentation028,
+  Instrumentation029,
+  Instrumentation030,
+  Instrumentation031,
+  Instrumentation032,
+  Instrumentation040,
+  Instrumentation041,
+  Instrumentation042,
+  Instrumentation043,
+  Instrumentation044,
+  Instrumentation045,
+  Instrumentation046,
+  Instrumentation047,
+  Instrumentation048,
+  Instrumentation049,
+  Instrumentation100,
+  Instrumentation201,
+  Instrumentation202,
+  Instrumentation203,
+  Instrumentation211,
+  Instrumentation212,
+  Instrumentation213,
+  Instrumentation215,
+  Instrumentation216,
+  Instrumentation217,
+  Instrumentation218,
+  Instrumentation219,
+  Instrumentation220,
+  Instrumentation221,
+  Instrumentation222,
+  Instrumentation223,
+  Instrumentation224,
+  Instrumentation225,
+  Instrumentation226,
+  Instrumentation227,
+  Instrumentation228,
+  Instrumentation229,
+  Instrumentation230,
+  Instrumentation231,
+  Instrumentation232,
+  Instrumentation233,
+  Instrumentation234,
+  Instrumentation235,
+  Instrumentation236,
+  Instrumentation237,
+  Instrumentation238,
+  Instrumentation239,
+  Instrumentation240,
+  Instrumentation241,
+  Instrumentation242,
+  Instrumentation243,
+  Instrumentation244,
+  Instrumentation245,
+  Instrumentation246,
+  Instrumentation247,
+  Instrumentation248,
+  Instrumentation249,
+  Instrumentation250,
+  Instrumentation251.
+<P>
+<TABLE BORDER=1 SUMMARY="Javatest Test Description" CLASS=TestDescription>
+  <THEAD><TR><TH SCOPE="col">Item</TH><TH SCOPE="col">Value</TH></TR></THEAD>
+  <TR>
+    <TD SCOPE="row"> <B>title</B> </TD>
+    <TD> 
+Testing of methods of java.lang.instrument.Instrumentation class
+when instrumentation agents started after the JVM is launched (Live Phase).
+ </TD>
+  </TR>
+  <TR>
+    <TD SCOPE="row"> <B>source</B> </TD>
+    <TD> <A HREF="InstrumentationAttachTests.java">InstrumentationAttachTests.java</A> <A HREF="InstrumentationMultiTest.java">InstrumentationMultiTest.java</A> <A HREF="InstrumentationAgent.java">InstrumentationAgent.java</A> <A HREF="InstrumentationAgent2.java">InstrumentationAgent2.java</A> <A HREF="ClassD.java">ClassD.java</A> <A HREF="ClassE.java">ClassE.java</A> <A HREF="ClassF.java">ClassF.java</A> <A HREF="ClassG.java">ClassG.java</A> <A HREF="ClassS.java">ClassS.java</A> <A HREF="ClassS0.java">ClassS0.java</A> <A HREF="InterfaceS11.java">InterfaceS11.java</A> <A HREF="BaseClass.java">BaseClass.java</A> <A HREF="redefineKlass/ClassD1.java">redefineKlass/ClassD1.java</A> <A HREF="redefineKlass/ClassD2.java">redefineKlass/ClassD2.java</A> <A HREF="redefineKlass/ClassE1.java">redefineKlass/ClassE1.java</A> <A HREF="redefineKlass/ClassF1.java">redefineKlass/ClassF1.java</A> <A HREF="redefineKlass/ClassG1.java">redefineKlass/ClassG1.java</A> <A HREF="redefineKlass/ClassH1.java">redefineKlass/ClassH1.java</A> <A HREF="redefineKlass/ClassI1.java">redefineKlass/ClassI1.java</A> <A HREF="redefineKlass/ClassS1.java">redefineKlass/ClassS1.java</A> <A HREF="redefineKlass/ClassS2.java">redefineKlass/ClassS2.java</A> <A HREF="redefineKlass/ClassS3.java">redefineKlass/ClassS3.java</A> <A HREF="redefineKlass/ClassS4.java">redefineKlass/ClassS4.java</A> <A HREF="redefineKlass/ClassS10.java">redefineKlass/ClassS10.java</A> <A HREF="redefineKlass/ClassS11.java">redefineKlass/ClassS11.java</A> <A HREF="redefineClass/ClassD1.java">redefineClass/ClassD1.java</A> <A HREF="redefineClass/ClassD2.java">redefineClass/ClassD2.java</A> <A HREF="redefineClass/ClassE1.java">redefineClass/ClassE1.java</A> <A HREF="redefineClass/ClassF1.java">redefineClass/ClassF1.java</A> <A HREF="redefineClass/ClassG1.java">redefineClass/ClassG1.java</A> <A HREF="redefineClass/ClassH1.java">redefineClass/ClassH1.java</A> <A HREF="redefineClass/ClassI1.java">redefineClass/ClassI1.java</A> <A HREF="redefineClass/ClassS1.java">redefineClass/ClassS1.java</A> <A HREF="redefineClass/ClassS2.java">redefineClass/ClassS2.java</A> <A HREF="redefineClass/ClassS3.java">redefineClass/ClassS3.java</A> <A HREF="redefineClass/ClassS4.java">redefineClass/ClassS4.java</A> <A HREF="redefineClass/ClassS10.java">redefineClass/ClassS10.java</A> <A HREF="redefineClass/ClassS11.java">redefineClass/ClassS11.java</A> <A HREF="retransformKlass/A1.java">retransformKlass/A1.java</A> <A HREF="retransformClass/A1.java">retransformClass/A1.java</A> <A HREF="retransformKlass/A2.java">retransformKlass/A2.java</A> <A HREF="retransformClass/A2.java">retransformClass/A2.java</A> <A HREF="retransformKlass/A3.java">retransformKlass/A3.java</A> <A HREF="retransformClass/A3.java">retransformClass/A3.java</A> <A HREF="retransformKlass/A4.java">retransformKlass/A4.java</A> <A HREF="retransformClass/A4.java">retransformClass/A4.java</A> <A HREF="retransformKlass/A5.java">retransformKlass/A5.java</A> <A HREF="retransformClass/A5.java">retransformClass/A5.java</A> <A HREF="retransformKlass/A6.java">retransformKlass/A6.java</A> <A HREF="retransformClass/A6.java">retransformClass/A6.java</A> <A HREF="retransformKlass/A7.java">retransformKlass/A7.java</A> <A HREF="retransformClass/A7.java">retransformClass/A7.java</A> <A HREF="retransformKlass/A8.java">retransformKlass/A8.java</A> <A HREF="retransformClass/A8.java">retransformClass/A8.java</A> <A HREF="retransformKlass/A9.java">retransformKlass/A9.java</A> <A HREF="retransformClass/A9.java">retransformClass/A9.java</A> <A HREF="retransformKlass/A10.java">retransformKlass/A10.java</A> <A HREF="retransformClass/A10.java">retransformClass/A10.java</A> <A HREF="retransformKlass/A11.java">retransformKlass/A11.java</A> <A HREF="retransformClass/A11.java">retransformClass/A11.java</A> <A HREF="retransformKlass/A12.java">retransformKlass/A12.java</A> <A HREF="retransformClass/A12.java">retransformClass/A12.java</A> <A HREF="retransformKlass/A13.java">retransformKlass/A13.java</A> <A HREF="retransformClass/A13.java">retransformClass/A13.java</A> <A HREF="retransformKlass/A14.java">retransformKlass/A14.java</A> <A HREF="retransformClass/A14.java">retransformClass/A14.java</A> <A HREF="retransformKlass/A15.java">retransformKlass/A15.java</A> <A HREF="retransformClass/A15.java">retransformClass/A15.java</A> <A HREF="retransformKlass/B1.java">retransformKlass/B1.java</A> <A HREF="retransformClass/B1.java">retransformClass/B1.java</A> <A HREF="retransformKlass/C1.java">retransformKlass/C1.java</A> <A HREF="retransformClass/C1.java">retransformClass/C1.java</A> <A HREF="retransformKlass/D1.java">retransformKlass/D1.java</A> <A HREF="retransformClass/D1.java">retransformClass/D1.java</A> <A HREF="retransformKlass/A16.java">retransformKlass/A16.java</A> <A HREF="retransformClass/A16.java">retransformClass/A16.java</A> <A HREF="retransformKlass/A17.java">retransformKlass/A17.java</A> <A HREF="retransformClass/A17.java">retransformClass/A17.java</A> <A HREF="ClassToResolve.java">ClassToResolve.java</A> <A HREF="ClassToResolve2.java">ClassToResolve2.java</A> <A HREF="ClassToLoad1.java">ClassToLoad1.java</A> <A HREF="ClassToLoad2.java">ClassToLoad2.java</A> <A HREF="ClassToLoad3.java">ClassToLoad3.java</A> <A HREF="ClassToLoadByDescendantCL.java">ClassToLoadByDescendantCL.java</A> <A HREF="ClassToLoadByDescendantCL2.java">ClassToLoadByDescendantCL2.java</A> <A HREF="ClassToLoadFromWrongJar.java">ClassToLoadFromWrongJar.java</A> <A HREF="snmp/NMPA1.java">snmp/NMPA1.java</A> <A HREF="snmp/NMPA1.c">snmp/NMPA1.c</A> <A HREF="snmp/NMPA2.java">snmp/NMPA2.java</A> <A HREF="snmp/NMPA2.c">snmp/NMPA2.c</A> <A HREF="snmp/NMPA3.java">snmp/NMPA3.java</A> <A HREF="snmp/NMPA3.c">snmp/NMPA3.c</A> <A HREF="snmp/NMPA4.java">snmp/NMPA4.java</A> <A HREF="snmp/NMPA4.c">snmp/NMPA4.c</A> <A HREF="snmp/NMPA5.java">snmp/NMPA5.java</A> <A HREF="snmp/NMPA5.c">snmp/NMPA5.c</A> <A HREF="snmp/NMPA6.java">snmp/NMPA6.java</A> <A HREF="snmp/NMPA6.c">snmp/NMPA6.c</A> <A HREF="snmp/NMPA7.java">snmp/NMPA7.java</A> <A HREF="snmp/NMPA7.c">snmp/NMPA7.c</A> </TD>
+  </TR>
+  <TR>
+    <TD SCOPE="row"> <B>executeClass</B> </TD>
+    <TD> javasoft.sqe.tests.api.java.lang.instrument.Instrumentation.InstrumentationAttachTests </TD>
+  </TR>
+  <TR>
+    <TD SCOPE="row"> <B>keywords</B> </TD>
+    <TD> needsharedclassloader runtime positive jniinvocationapi jplislivephase </TD>
+  </TR>
+  <TR>
+    <TD SCOPE="row"> <B>executeArgs</B> </TD>
+    <TD> -attachClassName $jplisLivePhaseLauncherImpl -agent1 $JPLISLivePhaseAgent -agent1opts $JPLISLivePhaseAgentopts -agent2 $JPLISLivePhaseAgent2 -agent2opts $JPLISLivePhaseAgent2opts  -TestCaseID ALL  -TestURL $testURL </TD>
+  </TR>
+  <TR>
+    <TD SCOPE="row"> <B>selectIf</B> </TD>
+    <TD>  platform.jplisLivePhaseSupported=="yes"  </TD>
+  </TR>
+  <TR>
+    <TD SCOPE="row"> <B>jplisAgent</B> </TD>
+    <TD> agent1.jar opt1 </TD>
+  </TR>
+  <TR>
+    <TD SCOPE="row"> <B>jplisAgent</B> </TD>
+    <TD> agent2.jar opt2 </TD>
+  </TR>
+  <TR>
+    <TD SCOPE="row"> <B>embeddedProfile</B> </TD>
+    <TD> 3 </TD>
+  </TR>
+</TABLE>
+
+
+<P>
+<HR>
+<H3><A NAME="setNativeMethodPrefix(ClassFileTransformer,String)"><CODE>public void setNativeMethodPrefix(ClassFileTransformer transformer, String prefix)</CODE></A></H3>
+
+<H4>Description</H4>
+<P>
+Domain testing of input and output conditions, and external
+pre-conditions for class Instrumentation,
+method <CODE>public void setNativeMethodPrefix(ClassFileTransformer transformer, String prefix)</CODE>.
+
+<H4>Equivalence class partitioning</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Pre-conditions </TH>
+    <TH SCOPE="col"> transformer </TH>
+    <TH SCOPE="col"> prefix </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD>  </TD>
+    <TD> null object </TD>
+    <TD> someprefix </TD>
+    <TD> NullPointerException should be thrown </TD>
+    <TD SCOPE="row"> Instrumentation240 </TD>
+  </TR>
+  <TR>
+    <TD> a transformer is registered in agent </TD>
+    <TD> non-null object </TD>
+    <TD> someprefix </TD>
+    <TD> UnsupportedOperationException must be thrown if setting a native method prefix
+is not allowed; no exception should be thrown otherwise </TD>
+    <TD SCOPE="row"> Instrumentation241 </TD>
+  </TR>
+  <TR>
+    <TD> a transformer is not registered in agent </TD>
+    <TD> non-null object (not registered) </TD>
+    <TD> someprefix </TD>
+    <TD> IllegalArgumentException should be thrown </TD>
+    <TD SCOPE="row"> Instrumentation242 </TD>
+  </TR>
+</TABLE>
+
+<H4>Assertion testing</H4>
+<TABLE BORDER=1 SUMMARY="Test case documentation table">
+<THEAD>
+  <TR>
+    <TH SCOPE="col"> Assertion </TH>
+    <TH SCOPE="col"> Expected results </TH>
+    <TH SCOPE="col"> Test Case ID </TH>
+  </TR>
+</THEAD>
+  <TR>
+    <TD> For automatic resolution, the JVM will attempt:
+<pre>    method(wrapped_foo) -> nativeImplementation(wrapped_foo)</pre> </TD>
+    <TD> The automatic resolution of:
+<pre>    method(wrappednmpa1) -> nativeImplementation(wrappednmpa1)</pre>
+is succeeded </TD>
+    <TD SCOPE="row"> Instrumentation243 </TD>
+  </TR>
+  <TR>
+    <TD> When automatic resolution fails, the resolution will be retried with the
+specified prefix deleted from the implementation name, yielding the correct
+resolution:
+<pre>    method(wrapped_foo) -> nativeImplementation(foo)</pre> </TD>
+    <TD> When automatic resolution fails, the resolution is retried with the 'wrapped'
+prefix deleted from the native implementation name, yielding the correct
+resolution:
+<pre>    method(wrappednmpa2) -> nativeImplementation(nmpa2)</pre> </TD>
+    <TD SCOPE="row"> Instrumentation244 </TD>
+  </TR>
+  <TR>
+    <TD> For explicit resolution with the JNI function RegisterNatives, the JVM will
+attempt:
+<pre>    method(foo) -> nativeImplementation(foo)</pre> </TD>
+    <TD> The explicit resolution with RegisterNatives succeeded the association:
+<pre>    method(nmpa3) -> nativeImplementation(nmpa3)</pre> </TD>
+    <TD SCOPE="row"> Instrumentation245 </TD>
+  </TR>
+  <TR>
+    <TD> When explicit resolution with the JNI function RegisterNatives fails,
+the resolution will be retried with the specified prefix prepended
+to the method name, yielding the correct resolution:
+<pre>    method(wrapped_foo) -> nativeImplementation(foo)</pre> </TD>
+    <TD> When explicit resolution with RegisterNatives failed, the resolution is retried
+with the <code>wrapped</code> prefix prepended to the <code>nmpa4</code> method
+name, yielding the correct resolution:
+<pre>    method(wrappednmpa4) -> nativeImplementation(nmpa4)</pre> </TD>
+    <TD SCOPE="row"> Instrumentation246 </TD>
+  </TR>
+  <TR>
+    <TD> Since each <code>ClassFileTransformer</code> can do its own transformation of
+the bytecodes, more than one layer of wrappers may be applied. Thus each
+transformer needs its own prefix. Since transformations are applied in order,
+the prefixes, if applied, will be applied in the same order (see addTransformer).
+Thus if three transformers applied wrappers, <code>foo</code> might become
+<code>$trans3_$trans2_$trans1_foo</code>. </TD>
+    <TD> The prefixes are applied in the same order as transformation, so
+<code>nmpa4</code> will become <code>prefix3prefix2prefix1nmpa4</code>. </TD>
+    <TD SCOPE="row"> Instrumentation247 </TD>
+  </TR>
+  <TR>
+    <TD> But if, say, the second transformer did not apply a wrapper to <code>foo</code>
+it would be just <code>$trans3_$trans1_foo</code> </TD>
+    <TD> The prefixes are applied in the same order as transformation and only when
+a transformer did apply a native method prefix to code </TD>
+    <TD SCOPE="row"> Instrumentation248 </TD>
+  </TR>
+  <TR>
+    <TD> To be able to efficiently determine the sequence of prefixes, an intermediate
+prefix is only applied if its non-native wrapper exists. </TD>
+    <TD> First and third prefixes are applied, but second prefix is not applied since
+its non-native wrapper does not exist. </TD>
+    <TD SCOPE="row"> Instrumentation249 </TD>
+  </TR>
+</TABLE>
+
+<H4>Test Descriptions</H4>
+<BR>
+See:<BR>
+<A HREF="#InstrumentationAttach">Test descriptions</A> for InstrumentationAttachTests.java
+  (Instrumentation240,
+   Instrumentation241,
+   Instrumentation242,
+   Instrumentation243,
+   Instrumentation244,
+   Instrumentation245,
+   Instrumentation246,
+   Instrumentation247,
+   Instrumentation248,
+   Instrumentation249)
+
+
+<P>
+<HR>
+<EM>Last updated: 08/01/31</EM><BR>
+<A HREF="../../../../../COPYRIGHT-jck.html">Copyright</A> &copy; 2006, 2008, Oracle and/or its affiliates. All rights reserved.<BR>
+ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.<BR></BODY>
+</HTML>

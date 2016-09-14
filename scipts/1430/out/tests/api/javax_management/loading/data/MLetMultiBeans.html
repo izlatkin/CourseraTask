@@ -1,0 +1,34 @@
+<HTML>
+<MLET
+	CODE = "com.sun.management.mbeans.loading.MLetBean"
+	CODEBASE = "/archives/"
+	ARCHIVE = "MLetBean.jar"
+	NAME = "NonSigned:type=MLetBean,count=1"
+>
+</MLET>
+<!-- This entry loads an other class from the same jarfile -->
+<MLET
+	CODE = "com.sun.management.mbeans.loading.MLetBeanBis"
+	CODEBASE = "/archives/"
+	ARCHIVE = "MLetBean.jar"
+	NAME = "NonSigned:type=MLetBeanBis,count=2"
+>
+</MLET>
+
+<!-- This entry loads an already class from an other jarfile -->
+<MLET
+	CODE = "com.sun.management.mbeans.loading.MLetBean"
+	CODEBASE = "/archives/"
+	ARCHIVE = "MLetBean1.jar"
+	NAME = "NonSigned:type=MLetBean,count=3"
+>
+</MLET>
+
+<BODY>
+
+Copyright &copy; 1999, 2004, Oracle and/or its affiliates. All rights reserved.<BR>
+ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.<BR>
+
+</BODY>
+</HTML>
+<!-- Ident: @(#)MLetMultiBeans.html 04/01/14-->

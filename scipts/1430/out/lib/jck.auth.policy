@@ -1,0 +1,40 @@
+/**** CodeSource- and Subject-based policy file for JAAS JCK tests ****/
+
+/*  NOTE:  It would be nice to add CodeBase and SignedBy fields in this 
+ *         file, but the JCK tests do not know this information.  
+ *         Individual testers may add these fields at their leisure.
+ */
+
+/*** Do not grant any Principal the following permissions (EVER!):  ***/
+// permission javax.security.auth.AuthPermission "setPolicy"
+// permission javax.security.auth.AuthPermission "setLoginConfiguration"
+// permission javax.security.auth.AuthPermission "setPrivilegedSubject"
+// permission javax.security.auth.AuthPermission "getPrivateCredentials"
+// permission javax.security.auth.AuthPermission "setReadOnly"
+
+/*  For DoAs1Tests, DoAs2Tests, DoAsPrivileged1Tests, DoAsPrivileged2Tests:  */
+
+grant Principal javasoft.sqe.jck.lib.security.auth.JCKPrincipal "yes1" {
+      permission javax.security.auth.AuthPermission "modifyPrincipals";
+};
+
+grant Principal javasoft.sqe.jck.lib.security.auth.JCKPrincipal "yes2" {
+      permission javax.security.auth.AuthPermission "modifyPrincipals";
+};
+
+grant Principal javasoft.sqe.jck.lib.security.auth.JCKPrincipal "yes3" {
+      permission javax.security.auth.AuthPermission "modifyPrincipals";
+};
+
+grant Principal javasoft.sqe.jck.lib.security.auth.JCKPrincipal "yes4" {
+      permission javax.security.auth.AuthPermission "modifyPrincipals";
+};
+
+grant Principal javasoft.sqe.jck.lib.security.auth.JCKPrincipal "yes5" {
+      permission javax.security.auth.AuthPermission "modifyPrincipals";
+};
+
+grant Principal javasoft.sqe.jck.lib.security.auth.JCKPrincipal "nono" {
+   // Never this permission:
+   //permission javax.security.auth.AuthPermission "modifyPrincipals";	
+};

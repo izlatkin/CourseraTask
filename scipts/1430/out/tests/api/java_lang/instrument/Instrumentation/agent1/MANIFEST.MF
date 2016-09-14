@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Signature-Version: 1.0
+Premain-Class: javasoft.sqe.tests.api.java.lang.instrument.Instrumentation.InstrumentationAgent
+Agent-Class: javasoft.sqe.tests.api.java.lang.instrument.Instrumentation.InstrumentationAgent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Can-Set-Native-Method-Prefix: true

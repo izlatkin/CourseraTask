@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Signature-Version: 1.0
